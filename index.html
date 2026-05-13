@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <!-- Avoid serving stale shell after deploys (pair with CDN/nginx no-cache on index.html) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title>Lucky Gaming · Zero Trust Access</title>
   </head>
   <body>
     <div id="root"></div>

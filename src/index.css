@@ -1,26 +1,157 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "./theme/tokens.css";
 @import "tailwindcss";
 
+/* Bridge CSS variables → Tailwind theme utilities */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
-  
-  --color-lucky-green: #3dbb87;
-  --color-lucky-red: #f15d5e;
-  --color-bg-dark: #0a0a0b;
-  --color-card-dark: #161618;
+  --font-sans: var(--iron-font-sans);
+  --font-display: var(--iron-font-sans);
+
+  --color-surface-app: var(--iron-surface-app);
+  --color-surface-void: var(--iron-surface-void);
+  --color-surface-header: var(--iron-surface-header);
+  --color-surface-card: var(--iron-surface-card);
+  --color-surface-panel: var(--iron-surface-panel);
+  --color-surface-input: var(--iron-surface-input);
+  --color-surface-elevated: var(--iron-surface-elevated);
+
+  --color-border-default: var(--iron-border-default);
+  --color-border-muted: var(--iron-border-muted);
+  --color-border-strong: var(--iron-border-strong);
+
+  --color-text-primary: var(--iron-text-primary);
+  --color-text-secondary: var(--iron-text-secondary);
+  --color-text-muted: var(--iron-text-muted);
+  --color-text-disabled: var(--iron-text-disabled);
+  --color-text-cyan: var(--iron-text-cyan);
+  --color-text-error: var(--iron-text-error);
+  --color-text-success: var(--iron-text-success);
+  --color-text-warning: var(--iron-text-warning);
+
+  --color-brand-green: var(--iron-brand-green);
+  --color-brand-red: var(--iron-brand-red);
+  --color-tech-cyan: var(--iron-tech-cyan);
+  --color-tech-cyan-soft: var(--iron-tech-cyan-soft);
+  --color-info-blue: var(--iron-info-blue);
+
+  --color-risk-critical: var(--iron-risk-critical);
+  --color-risk-high: var(--iron-risk-high);
+  --color-risk-medium: var(--iron-risk-medium);
+  --color-risk-low: var(--iron-risk-low);
+
+  --color-lucky-green: var(--iron-legacy-lucky-green);
+  --color-lucky-red: var(--iron-legacy-lucky-red);
+  --color-bg-dark: var(--iron-legacy-bg-dark);
+  --color-card-dark: var(--iron-legacy-card-dark);
+
+  --shadow-iron-elevated: var(--iron-shadow-elevated);
 }
 
 @layer base {
+  html {
+    @apply antialiased;
+  }
+
   body {
-    @apply bg-bg-dark text-gray-100 font-sans antialiased;
+    @apply bg-surface-app text-text-secondary font-sans text-[13px] leading-normal;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-.glass {
-  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+/* Atmospheric grid — SOC / threat-intel tone */
+.bg-grid-intel {
+  background-image:
+    linear-gradient(var(--iron-grid-bg-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--iron-grid-bg-line) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.card-hover {
-  @apply transition-all duration-300 hover:border-lucky-green/50 hover:shadow-[0_0_20px_rgba(61,187,135,0.15)];
+.bg-radial-vignette {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% -20%,
+    var(--iron-fx-vignette),
+    transparent 55%
+  );
+}
+
+@layer components {
+  .iron-app-card {
+    @apply flex h-full flex-col rounded-[8px] border bg-surface-card;
+    transition-property: border-color, box-shadow, background-color;
+    transition-duration: var(--iron-duration-panel);
+    transition-timing-function: var(--iron-ease-out);
+  }
+
+  .iron-app-card:hover {
+    border-color: var(--iron-border-default);
+    background-color: var(--iron-surface-hover);
+  }
+
+  .iron-app-card:focus-visible {
+    @apply outline-none ring-2 ring-tech-cyan/20 border-tech-cyan/60;
+  }
+
+  .iron-app-card[data-accent="low"] {
+    border-color: var(--iron-accent-low-border);
+  }
+
+  .iron-app-card[data-accent="info"] {
+    border-color: var(--iron-accent-info-border);
+  }
+
+  .iron-app-card[data-accent="medium"] {
+    border-color: var(--iron-accent-medium-border);
+  }
+
+  .iron-icon-well {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border [&_svg]:stroke-[1.5];
+  }
+
+  .iron-app-card[data-accent="low"] .iron-icon-well {
+    background: var(--iron-accent-low-well-bg);
+    border-color: var(--iron-accent-low-well-border);
+    @apply text-brand-green;
+  }
+
+  .iron-app-card[data-accent="info"] .iron-icon-well {
+    background: var(--iron-accent-info-well-bg);
+    border-color: var(--iron-accent-info-well-border);
+    @apply text-info-blue;
+  }
+
+  .iron-app-card[data-accent="medium"] .iron-icon-well {
+    background: var(--iron-accent-medium-well-bg);
+    border-color: var(--iron-accent-medium-well-border);
+    @apply text-risk-medium;
+  }
+
+  .iron-btn-secondary {
+    @apply inline-flex h-9 w-full cursor-pointer items-center justify-center gap-2 px-3.5 text-[13px] font-medium text-text-primary active:scale-[0.99];
+    border-radius: var(--iron-radius-button);
+    background-color: var(--iron-button-bg);
+    border: 1px solid var(--iron-button-border);
+    transition-property: background-color, border-color, color;
+    transition-duration: var(--iron-duration-panel);
+    transition-timing-function: var(--iron-ease-out);
+  }
+
+  .iron-btn-secondary:hover {
+    background-color: var(--iron-button-bg-hover);
+    border-color: var(--iron-button-border-hover);
+  }
+
+  .iron-btn-secondary:focus-visible {
+    outline: 2px solid var(--iron-tech-cyan);
+    outline-offset: 2px;
+    box-shadow: var(--iron-focus-ring);
+  }
 }
