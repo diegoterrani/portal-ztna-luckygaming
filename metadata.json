@@ -1,0 +1,6 @@
+{
+  "name": "Lucky Gaming Access Portal",
+  "description": "Zero Trust Access portal for Lucky Gaming backoffice applications and gaming platforms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

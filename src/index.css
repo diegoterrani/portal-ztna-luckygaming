@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-lucky-green: #3dbb87;
+  --color-lucky-red: #f15d5e;
+  --color-bg-dark: #0a0a0b;
+  --color-card-dark: #161618;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-gray-100 font-sans antialiased;
+  }
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:border-lucky-green/50 hover:shadow-[0_0_20px_rgba(61,187,135,0.15)];
+}
