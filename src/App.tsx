@@ -291,8 +291,19 @@ export default function App() {
           </div>
         </section>
 
-        <footer className="mt-12 flex flex-col gap-4 border-t border-border-muted pt-8 text-[11px] text-text-muted md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Lucky Gaming · Iron Security Intelligence</p>
+        <footer className="mt-12 flex flex-col gap-4 border-t border-border-muted pt-8 text-[11px] text-text-muted md:flex-row md:items-start md:justify-between">
+          <div>
+            <p>© 2026 Lucky Gaming · Iron Security Intelligence</p>
+            <p
+              className="mt-1 font-mono text-[10px] text-text-muted/80"
+              title="Após um deploy novo, esta linha deve mudar (versão, commit e data). Caso contrário, há cache no browser ou na CDN."
+            >
+              Build {__PORTAL_VERSION__} · {__PORTAL_COMMIT__} ·{' '}
+              <time dateTime={__PORTAL_BUILT_AT__}>
+                {__PORTAL_BUILT_AT__.slice(0, 19).replace('T', ' ')} UTC
+              </time>
+            </p>
+          </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Rodapé">
             <a
               href="#"
