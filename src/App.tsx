@@ -11,9 +11,6 @@ import {
   Database,
   Gamepad2,
   Lock,
-  Activity,
-  Server,
-  Fingerprint,
 } from "lucide-react";
 
 type RiskAccent = "low" | "info" | "medium";
@@ -118,34 +115,6 @@ function LuckyLogo() {
   );
 }
 
-function MiniStat({
-  label,
-  value,
-  icon,
-}: {
-  label: string;
-  value: string;
-  icon: ReactNode;
-}) {
-  return (
-    <div className="flex min-h-[88px] min-w-0 flex-1 flex-col justify-between rounded-[8px] border border-border-default bg-surface-card p-4">
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-[12px] font-medium text-text-muted">{label}</span>
-        <span className="text-text-secondary [&_svg]:stroke-[1.5]">{icon}</span>
-      </div>
-      <p className="text-[16px] font-medium tabular-nums text-text-primary">
-        {value}
-      </p>
-      <div
-        className="mt-2 h-1 w-full overflow-hidden rounded-full bg-[var(--iron-progress-track)]"
-        aria-hidden
-      >
-        <div className="h-full w-3/4 rounded-full bg-tech-cyan/70" />
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
   const reduceMotion = useReducedMotion();
 
@@ -199,24 +168,6 @@ export default function App() {
               className="hidden h-8 w-px shrink-0 bg-border-muted sm:block"
               aria-hidden
             />
-            <div className="hidden items-center gap-2 sm:flex">
-              <span className="flex h-9 items-center rounded-[var(--iron-radius-chip)] border border-border-default bg-[var(--iron-surface-header-control)] px-3.5 text-[13px] font-medium text-text-primary">
-                <Activity
-                  className="mr-2 text-tech-cyan"
-                  strokeWidth={1.5}
-                  size={16}
-                  aria-hidden
-                />
-                Canais monitorados
-              </span>
-              <span className="flex items-center gap-1.5 rounded-[var(--iron-radius-chip)] border border-[var(--iron-pill-ok-border)] bg-[var(--iron-pill-ok-bg)] px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-brand-green">
-                <span
-                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-green"
-                  aria-hidden
-                />
-                Operacional
-              </span>
-            </div>
           </div>
 
           <div className="flex items-center gap-2 text-text-secondary">
@@ -242,40 +193,17 @@ export default function App() {
             initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
+            className="mx-auto max-w-2xl text-center"
           >
-            <p className="mb-1 text-[12px] font-medium uppercase tracking-[0.04em] text-text-muted">
-              Iron Security · Acesso
-            </p>
             <h1 className="mb-1 text-[20px] font-bold leading-tight text-text-primary">
-              Seleção de destino
+              ZERO TRUST ACCESS
             </h1>
-            <p className="max-w-2xl text-[12px] leading-relaxed text-text-secondary">
+            <p className="text-[12px] leading-relaxed text-text-secondary">
               Escolha o sistema autorizado. Todas as sessões são avaliadas por política,
               inspeção de tráfego e registro de auditoria.
             </p>
           </motion.div>
         </div>
-
-        <section
-          className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3"
-          aria-label="Indicadores de canal"
-        >
-          <MiniStat
-            label="Destinos publicados"
-            value={String(apps.length).padStart(2, "0")}
-            icon={<Server size={18} aria-hidden />}
-          />
-          <MiniStat
-            label="Camada de confiança"
-            value="ZTNA / mTLS"
-            icon={<ShieldCheck size={18} aria-hidden />}
-          />
-          <MiniStat
-            label="Identidade"
-            value="SSO + política"
-            icon={<Fingerprint size={18} aria-hidden />}
-          />
-        </section>
 
         <section className="mt-8" aria-labelledby="apps-heading">
           <h2
