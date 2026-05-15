@@ -1,0 +1,32 @@
+[
+  {
+    "id": "pagol",
+    "name": "PAGOL — Backoffice",
+    "url": "https://back.zta.luckygaming.com.br",
+    "routeHost": "back.zta.luckygaming.com.br",
+    "description": "Console administrativo com políticas de identidade e registro de acesso.",
+    "thumbnailDataUrl": "",
+    "createdAt": "2026-05-15T00:00:00.000Z",
+    "updatedAt": "2026-05-15T00:00:00.000Z"
+  },
+  {
+    "id": "4play-bko",
+    "name": "4PLAY.GAME — Backoffice",
+    "url": "https://bko.zta.luckygaming.com.br",
+    "routeHost": "bko.zta.luckygaming.com.br",
+    "description": "Operações de backoffice com inspeção de tráfego e MFA por perfil.",
+    "thumbnailDataUrl": "",
+    "createdAt": "2026-05-15T00:00:00.000Z",
+    "updatedAt": "2026-05-15T00:00:00.000Z"
+  },
+  {
+    "id": "4play-game",
+    "name": "4PLAY.GAME",
+    "url": "https://play.zta.luckygaming.com.br",
+    "routeHost": "play.zta.luckygaming.com.br",
+    "description": "Ambiente de jogo autorizado com rotas validadas por política Zero Trust.",
+    "thumbnailDataUrl": "",
+    "createdAt": "2026-05-15T00:00:00.000Z",
+    "updatedAt": "2026-05-15T00:00:00.000Z"
+  }
+]

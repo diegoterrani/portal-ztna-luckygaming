@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import AdminPage from "./AdminPage";
 import {
   ExternalLink,
   ShieldCheck,
@@ -85,7 +86,20 @@ function AppCard({ app, index }: AppCardProps) {
   );
 }
 
-function LuckyLogo() {
+function LuckyLogo({ holdName, holdLogoDataUrl }: { holdName: string; holdLogoDataUrl: string }) {
+  if (holdLogoDataUrl) {
+    return (
+      <div className="flex items-center gap-2">
+        <img
+          src={holdLogoDataUrl}
+          alt={holdName}
+          className="h-8 w-auto rounded-sm object-contain"
+        />
+        <span className="text-[16px] font-semibold text-text-primary">{holdName}</span>
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center gap-2">
       <svg
@@ -116,7 +130,37 @@ function LuckyLogo() {
 }
 
 export default function App() {
+  if (window.location.pathname.startsWith("/super-admin")) {
+    return <AdminPage />;
+  }
+
   const reduceMotion = useReducedMotion();
+  const [branding, setBranding] = useState({ holdName: "Lucky Gaming", holdLogoDataUrl: "" });
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadBranding() {
+      try {
+        const response = await fetch("/api/public/branding", { credentials: "include" });
+        if (!response.ok) return;
+        const data = (await response.json()) as {
+          holdName?: string;
+          holdLogoDataUrl?: string;
+        };
+        if (!mounted) return;
+        setBranding({
+          holdName: data.holdName || "Lucky Gaming",
+          holdLogoDataUrl: data.holdLogoDataUrl || "",
+        });
+      } catch {
+        // Ignore branding fetch errors and keep defaults.
+      }
+    }
+    loadBranding();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const apps: AppItem[] = [
     {
@@ -163,7 +207,10 @@ export default function App() {
       >
         <div className="mx-auto flex h-full max-w-[1400px] items-center justify-between px-[var(--iron-content-padding-x)]">
           <div className="flex min-w-0 items-center gap-4">
-            <LuckyLogo />
+            <LuckyLogo
+              holdName={branding.holdName}
+              holdLogoDataUrl={branding.holdLogoDataUrl}
+            />
             <span
               className="hidden h-8 w-px shrink-0 bg-border-muted sm:block"
               aria-hidden
